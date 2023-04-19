@@ -1,0 +1,55 @@
+package com.cibertec.personalplanta.model;
+
+
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import java.util.Date;
+import java.util.Set;
+
+@Entity
+@Table(name="tb_capacitacion")
+@Getter
+@Setter
+public class Capacitacion {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id_capacitacion")
+    private long id;
+
+    @Column(name="des_capacitacion", length = 200, nullable = false)
+    private String descripcion;
+
+    @Column(name="fecha_inicio",  nullable = false)
+    @Temporal(value=TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fechaInicio;
+
+    @Column(name="fecha_fin",  nullable = false)
+    @Temporal(value=TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fechaFin;
+
+    @Column(name = "estado")
+    private int estado;
+
+    @Column(name = "creditos")
+    private int creditos;
+
+    @ManyToMany(mappedBy = "capacitaciones")
+    private Set<Empleado> empleados;
+
+    public String NombreEstado() {
+        String nombreEstado = null;
+
+        if (estado == 0) nombreEstado= "Programado";
+        else if (estado == 1) nombreEstado =  "Realizado";
+        else if (estado == 2) nombreEstado =  "Postergado";
+        else nombreEstado =  "Otros";
+        return nombreEstado;
+    }
+
+}

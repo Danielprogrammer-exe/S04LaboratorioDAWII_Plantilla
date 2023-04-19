@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleafe.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrar Vacaciones</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<div class="container my-2">
+    <h1>Lista de Vacaciones</h1><br>
+    <a th:href="@{/nuevaVacacion}" class="btn btn-primary btn-sm mb-3">Agregar Vacacion</a>
+    <br>
+    <hr>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Fecha Inicio</th>
+            <th scope="col">Fecha Fin</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Ación</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="vacacion : ${listaVacaciones}">
+
+            <td th:text="${#dates.format(vacacion.getFechaInicio(), 'dd/MM/yyyy')}" ></td>
+            <td th:text="${#dates.format(vacacion.getFechaFin(), 'dd/MM/yyyy')}"></td>
+            <td th:text="${vacacion.NombreEstado()}" ></td>
+            <td>
+                <a th:href="@{/actualizarVacacion/{id}(id=${vacacion.id})}" class="btn btn-primary"> Actualizar </a> &nbsp &nbsp
+                <a th:href="@{/eliminarVacacion/{id}(id=${vacacion.id})}" class="btn btn-danger"> Eliminar </a>
+
+
+            </td>
+
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
